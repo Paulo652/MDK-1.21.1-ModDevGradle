@@ -1,0 +1,24 @@
+{
+  "itemGroup.moltensmith": "MoltenSmith",
+  "block.moltensmith.example_block": "Example Block",
+  "item.moltensmith.example_item": "Example Item",
+
+  "moltensmith.configuration.title": "MoltenSmith Configs",
+  "moltensmith.configuration.section.moltensmith.common.toml": "MoltenSmith Configs",
+  "moltensmith.configuration.section.moltensmith.common.toml.title": "MoltenSmith Configs",
+  "moltensmith.configuration.items": "Item List",
+  "moltensmith.configuration.logDirtBlock": "Log Dirt Block",
+  "moltensmith.configuration.magicNumberIntroduction": "Magic Number Text",
+  "moltensmith.configuration.magicNumber": "Magic Number",
+
+  "material.moltensmith.oak": "Oak",
+  "material.moltensmith.stone": "Stone",
+  "material.moltensmith.iron": "Iron",
+  "material.moltensmith.gold": "Gold",
+  "material.moltensmith.diamond": "Diamond",
+  "material.moltensmith.netherite": "Netherite",
+  "material.moltensmith.copper": "Copper",
+  "material.moltensmith.emerald": "Emerald",
+  "material.moltensmith.obsidian": "Obsidian",
+  "material.moltensmith.bone": "Bone"
+}
