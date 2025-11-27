@@ -37,8 +37,11 @@ public class Material {
     - float attackDamage       // Daño de ataque
     - int miningLevel          // Nivel de herramienta (1=madera, 5=netherita)
     - int enchantability       // Facilidad para encantar
+    - float attackSpeed        // Velocidad de ataque
+    - float knockback          // Retroceso
+    - float weight             // Peso (afecta velocidad)
     - Color color              // Color visual del material
-    - Map<String, Float> modifiers  // Modificadores especiales
+    - Map<String, MaterialTrait> traits  // Rasgos especiales
 }
 ```
 
@@ -46,13 +49,40 @@ public class Material {
 - **Netherite**: Resistencia al fuego, no se quema en lava
 - **Oro**: Alta encantabilidad, baja durabilidad
 - **Diamante**: Alta durabilidad, buen daño
-- **Madera**: Reparable con palos, ligera
+- **Madera**: Reparable con palos, ligera, bajo peso
 - **Hierro**: Balanceada, versátil
 - **Custom**: Posibilidad de añadir rasgos personalizados
 
 ---
 
-### 1.2 Sistema de Fundición (Smeltery)
+### 1.2 Sistema de Moldes (Mold System)
+**Prioridad: ALTA - Determina qué partes se pueden fabricar**
+
+#### 🔧 Moldes Necesarios (Solo 12 moldes en total):
+
+**Moldes Comodín (5):**
+1. **Molde de Vara** (Rod Mold) - Para todos los mangos de una mano
+2. **Molde de Asta** (Pole Mold) - Para todos los mangos de dos manos
+3. **Molde de Ligadura** (Binding Mold) - Para todas las uniones
+4. **Molde de Guarda** (Guard Mold) - Para todas las guardas de espadas
+5. **Molde de Pomo** (Pommel Mold) - Para todos los contrapesos
+
+**Moldes de Cabezas Únicas (7):**
+6. **Molde de Hoja de Cuchillo** (Knife Blade Mold)
+7. **Molde de Hoja de Espada** (Sword Blade Mold)
+8. **Molde de Hoja de Katana** (Katana Blade Mold)
+9. **Molde de Punta de Lanza** (Spearhead Mold)
+10. **Molde de Cabeza de Hacha** (Axe Head Mold)
+11. **Molde de Cabeza de Pico** (Pickaxe Head Mold)
+12. **Molde de Placa Grande** (Large Plate Mold)
+
+**Crafteo de Moldes:**
+- **Moldes de Madera/Piedra**: Crafteo vanilla (4 tablas/piedras + item de patrón)
+- **Moldes avanzados**: Requieren fundición (arcilla cocida + patrón)
+
+---
+
+### 1.3 Sistema de Fundición (Smeltery)
 **Prioridad: ALTA - Mecánica central del mod**
 
 #### Estructura Multibloque:
@@ -85,84 +115,115 @@ public class Material {
 ### 1.3 Sistema de Componentes de Armas
 **Prioridad: ALTA - Define las armas modulares**
 
-#### ARMAS Y HERRAMIENTAS COMPATIBLES CON BETTER COMBAT:
+#### ⚔️ RECETAS DE ENSAMBLAJE (Sistema Optimizado)
+
+**A. ARMAS DE FILO (Swords & Daggers)**
 
 **1. DAGA** (Dagger)
-- **Hoja** (Blade): Daño base, penetración de armadura
-- **Guarda** (Guard): Protección en combate, durabilidad
-- **Empuñadura** (Handle): Velocidad de ataque, peso
-- *Trade-off*: Alta velocidad de ataque → Bajo daño y alcance
+- **Receta**: Hoja de Cuchillo + Guarda + Vara
+- **Lógica**: Vara = mango corto
+- *Trade-off*: Alta velocidad → Bajo daño y alcance
+- **Partes**: 1 única + 2 reutilizables
 
 **2. ESPADA** (Sword)
-- **Hoja** (Blade): Daño principal y durabilidad
-- **Guarda** (Guard): Durabilidad extra, balance
-- **Empuñadura** (Handle): Velocidad de ataque
-- **Pomo** (Pommel): Balance, peso (afecta velocidad)
+- **Receta**: Hoja de Espada + Guarda + Vara + Pomo
+- **Lógica**: Arma balanceada con contrapeso
 - *Trade-off*: Balanceada → Sin especializaciones extremas
+- **Partes**: 1 única + 3 reutilizables
 
-**3. ESPADA LARGA / CLAYMORE** (Longsword/Claymore)
-- **Hoja** (Blade): Daño alto, durabilidad
-- **Guarda** (Guard): Protección y durabilidad
-- **Empuñadura** (Handle): Agarre a dos manos, alcance
-- **Pomo** (Pommel): Contrapeso, balance
-- *Trade-off*: Alto daño y alcance → Velocidad de ataque lenta, requiere dos manos
+**3. ESPADA LARGA / CLAYMORE** (Longsword)
+- **Receta**: Hoja de Espada + Guarda + Asta + Pomo
+- **Reutilización**: ¡Misma hoja que espada normal! Solo cambia el mango a Asta
+- *Trade-off*: Alto daño y alcance → Muy lenta, dos manos
+- **Partes**: 1 única + 3 reutilizables
 
 **4. KATANA**
-- **Hoja** (Blade): Daño de corte, durabilidad
-- **Guarda** (Tsuba): Balance fino
-- **Empuñadura** (Tsuka): Agarre, velocidad
-- **Habaki** (Collar): Estabilidad de hoja
+- **Receta**: Hoja de Katana + Ligadura + Vara
+- **Lógica**: Ligadura = Habaki (pieza que sujeta la hoja) + Tsuba
 - *Trade-off*: Velocidad media-alta y daño decente → Menor durabilidad
-
-**5. LANZA** (Spear)
-- **Punta** (Spearhead): Daño perforante
-- **Asta** (Shaft): Alcance, durabilidad
-- **Base** (Butt): Contrapeso, balance
-- *Trade-off*: Máximo alcance → Inefectiva en espacios cerrados, daño moderado
-
-**6. HACHA** (Axe) - Herramienta/Arma
-- **Cabeza** (Head): Daño, eficiencia de corte
-- **Mango** (Handle): Velocidad, durabilidad
-- **Encuadernación** (Binding): Estabilidad
-- *Trade-off*: Alto daño → Velocidad de ataque baja
-
-**7. PICO** (Pickaxe) - Herramienta
-- **Cabeza** (Head): Velocidad de minado, nivel de herramienta
-- **Mango** (Handle): Durabilidad, eficiencia
-- **Encuadernación** (Binding): Estabilidad
-- *Trade-off*: Especialización en piedra → Ineficiente en otros bloques
-
-**8. AZADA** (Hoe) - Herramienta/Arma única
-- **Cabeza** (Head): Eficiencia de labrado
-- **Mango** (Handle): Alcance, velocidad
-- *Trade-off*: Versátil en agricultura → Daño muy bajo en combate
-
-#### Sistema de Trade-offs por Componente:
-Cada parte no solo añade estadísticas, sino que también **penaliza** otras:
-- **Hoja pesada**: +Daño, -Velocidad de ataque
-- **Hoja ligera**: +Velocidad, -Daño, -Durabilidad
-- **Empuñadura larga**: +Alcance, -Velocidad
-- **Empuñadura corta**: +Velocidad, -Alcance
-- **Pomo pesado**: +Balance (reduce penalización de velocidad), +Peso total
-- **Guard elaborada**: +Durabilidad, +Peso
+- **Partes**: 1 única + 2 reutilizables
 
 ---
 
-### 1.4 Sistema de Moldes (Casting)
-**Prioridad: MEDIA-ALTA**
+**B. ARMAS DE ASTA (Polearms)**
 
-#### Tipos de Moldes:
-- Molde de Hoja
-- Molde de Guarda
-- Molde de Empuñadura
-- Molde de Cabeza de Hacha
-- Molde de Cabeza de Pico
-- Molde de Pala
-- Molde de Lingote (para crear lingotes personalizados)
+**5. LANZA** (Spear)
+- **Receta**: Punta de Lanza + Asta + Pomo
+- **Lógica**: Pomo = "Butt" (base metálica) para equilibrar peso
+- *Trade-off*: Máximo alcance → Inefectiva en espacios cerrados
+- **Partes**: 1 única + 2 reutilizables
 
-#### Creación de Moldes:
-- Opción 1: Crafteo tradicional con materiales específicos
-- Opción 2: Verter metal fundido sobre patrones de madera (más fiel a Tinkers)
+**6. ALABARDA / HACHA DE GUERRA** (Halberd)
+- **Receta**: Cabeza de Hacha + Asta + Ligadura
+- **Reutilización**: ¡Misma cabeza de hacha normal! Cambia Vara por Asta
+- *Trade-off*: Alto daño de dos manos → Muy lenta
+- **Partes**: 1 única + 2 reutilizables
+
+---
+
+**C. HERRAMIENTAS Y HACHAS**
+
+**7. HACHA DE MANO** (Axe)
+- **Receta**: Cabeza de Hacha + Vara + Ligadura
+- **Lógica**: Ligadura asegura cabeza pesada al mango corto
+- *Trade-off*: Alto daño → Velocidad baja
+- **Partes**: 1 única + 2 reutilizables
+
+**8. PICO** (Pickaxe)
+- **Receta**: Cabeza de Pico + Vara + Ligadura
+- **Reutilización**: Misma Ligadura que Hacha
+- *Trade-off*: Especialización en piedra → Ineficiente en otros bloques
+- **Partes**: 1 única + 2 reutilizables
+
+**9. PALA** (Shovel)
+- **Receta**: Placa Grande + Asta + Ligadura
+- **Innovación**: Placa Grande reutilizable para escudos futuros
+- *Trade-off*: Eficiente en tierra/arena → Inútil en piedra
+- **Partes**: 1 única + 2 reutilizables
+
+**10. AZADA** (Hoe)
+- **Receta**: Cabeza de Hacha + Vara + Ligadura (versión modificada)
+- **Alternativa**: Placa Grande + Vara (versión simple)
+- *Trade-off*: Versátil en agricultura → Daño muy bajo en combate
+- **Partes**: 1 única + 2 reutilizables
+
+#### 📊 Sistema de Trade-offs por Componente:
+
+**Partes Comodín - Efectos según Material:**
+
+**VARA (Rod):**
+- Material ligero (Madera): +Velocidad de ataque, -Durabilidad
+- Material pesado (Metal): +Durabilidad, -Velocidad de ataque
+- Material balanceado (Hierro): Stats neutrales
+
+**ASTA (Pole):**
+- Siempre: +Alcance, -Velocidad de ataque (penalización fija por ser dos manos)
+- Material ligero: Reduce penalización de velocidad
+- Material pesado: Aumenta durabilidad pero penaliza más la velocidad
+
+**LIGADURA (Binding):**
+- Material flexible (Cuero/Madera): +Durabilidad menor, +Velocidad
+- Material rígido (Metal): +Durabilidad mayor, -Velocidad menor
+- Efecto fijo: +10% durabilidad base
+
+**GUARDA (Guard):**
+- Material ligero: +Durabilidad, bonus defensivo mínimo
+- Material pesado: +Durabilidad mayor, +Resistencia al knockback, -Velocidad
+- Efecto fijo: Protección al bloquear
+
+**POMO (Pommel):**
+- Material ligero: Reduce penalización de armas pesadas
+- Material pesado: +Knockback, +Balance, -Velocidad de ataque
+- En Lanzas: Actúa como contrapeso (mejora precisión)
+
+**Cabezas Únicas - Determinan el rol del arma:**
+- **Hoja de Cuchillo**: Daño bajo, velocidad muy alta
+- **Hoja de Espada**: Daño medio, velocidad media
+- **Hoja de Katana**: Daño medio-alto, velocidad alta, durabilidad reducida
+- **Punta de Lanza**: Daño perforante, alcance máximo
+- **Cabeza de Hacha**: Daño alto, velocidad baja
+- **Cabeza de Pico**: Velocidad de minado, nivel de herramienta
+- **Placa Grande**: Área de efecto (pala), potencial para escudo
 
 ---
 
@@ -179,6 +240,16 @@ Cada parte no solo añade estadísticas, sino que también **penaliza** otras:
 - Versión mejorada para armas más complejas
 - Permite más slots de modificadores
 - Necesaria para herramientas de nivel superior
+
+#### 🎯 Validación de Recetas:
+El Tool Station debe validar que las combinaciones sean correctas:
+```java
+// Ejemplos de validaciones:
+- Espada = Hoja de Espada + Guarda + Vara + Pomo ✓
+- Claymore = Hoja de Espada + Guarda + Asta + Pomo ✓
+- Daga = Hoja de Espada + Guarda + Vara (INVÁLIDO) ✗
+- Daga = Hoja de Cuchillo + Guarda + Vara ✓
+```
 
 ---
 

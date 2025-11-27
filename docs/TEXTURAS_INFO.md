@@ -4,29 +4,43 @@
 
 ### Texturas Necesarias (Pendientes)
 
-#### 1. **Partes de Armas** (Sin texturas aún)
-Cada parte necesitará texturas para cada material:
-- `blade_<material>.png` - Hoja de arma
-- `guard_<material>.png` - Guarda
-- `handle_<material>.png` - Empuñadura/Mango
-- `pommel_<material>.png` - Pomo
-- `spearhead_<material>.png` - Punta de lanza
-- `crossguard_<material>.png` - Guarda cruzada
+#### 1. **Partes de Armas - SISTEMA OPTIMIZADO** (Sin texturas aún)
 
-**Cantidad estimada**: ~10 materiales × 6 tipos de partes = **~60 texturas de partes**
+**PARTES COMODÍN (5 tipos × 10 materiales = 50 texturas):**
+- `rod_<material>.png` - Vara (mango de una mano)
+- `pole_<material>.png` - Asta (mango de dos manos)
+- `binding_<material>.png` - Ligadura (unión)
+- `guard_<material>.png` - Guarda (protección de mano)
+- `pommel_<material>.png` - Pomo (contrapeso)
+
+**CABEZAS ÚNICAS (7 tipos × 10 materiales = 70 texturas):**
+- `knife_blade_<material>.png` - Hoja de cuchillo (Daga)
+- `sword_blade_<material>.png` - Hoja de espada (Espada/Claymore)
+- `katana_blade_<material>.png` - Hoja de katana
+- `spearhead_<material>.png` - Punta de lanza
+- `axe_head_<material>.png` - Cabeza de hacha
+- `pickaxe_head_<material>.png` - Cabeza de pico
+- `large_plate_<material>.png` - Placa grande (Pala/Escudo futuro)
+
+**Cantidad estimada**: 12 tipos de partes × 10 materiales = **~120 texturas de partes** (vs 60+ del sistema anterior)
 
 #### 2. **Armas Completas** (Sin texturas aún)
-Armas ensambladas que se generarán dinámicamente o necesitarán texturas compuestas:
-- `dagger.png` - Daga
-- `sword.png` - Espada
-- `longsword.png` - Espada larga
-- `katana.png` - Katana
-- `spear.png` - Lanza
-- `axe.png` - Hacha
-- `pickaxe.png` - Pico
-- `hoe.png` - Azada
 
-**Cantidad estimada**: 8 tipos de armas × ~10 combinaciones de materiales = **~80 texturas** (si no son dinámicas)
+**NOTA**: Las texturas de armas completas se generarán **DINÁMICAMENTE** en el renderer combinando las texturas de partes.
+
+**Armas a renderizar:**
+- `dagger` - Hoja de Cuchillo + Guarda + Vara
+- `sword` - Hoja de Espada + Guarda + Vara + Pomo
+- `longsword` - Hoja de Espada + Guarda + Asta + Pomo
+- `katana` - Hoja de Katana + Ligadura + Vara
+- `spear` - Punta de Lanza + Asta + Pomo
+- `halberd` - Cabeza de Hacha + Asta + Ligadura
+- `axe` - Cabeza de Hacha + Vara + Ligadura
+- `pickaxe` - Cabeza de Pico + Vara + Ligadura
+- `shovel` - Placa Grande + Asta + Ligadura
+- `hoe` - Cabeza de Hacha + Vara (versión modificada)
+
+**Cantidad estimada**: **0 texturas estáticas** (todo dinámico), pero necesitamos crear las 120 texturas de partes para que funcione
 
 #### 3. **Bloques de Fundición** (Sin texturas aún)
 - `smeltery_controller.png` - Controlador de fundición (textura de bloque)
@@ -39,16 +53,29 @@ Armas ensambladas que se generarán dinámicamente o necesitarán texturas compu
 
 **Cantidad estimada**: **~7-10 texturas de bloques**
 
-#### 4. **Moldes** (Sin texturas aún)
-- `mold_blank.png` - Molde vacío
-- `mold_blade.png` - Molde de hoja
+#### 4. **Moldes - SISTEMA OPTIMIZADO** (Sin texturas aún)
+
+**MOLDES COMODÍN (5):**
+- `mold_rod.png` - Molde de vara
+- `mold_pole.png` - Molde de asta
+- `mold_binding.png` - Molde de ligadura
 - `mold_guard.png` - Molde de guarda
-- `mold_handle.png` - Molde de empuñadura
-- `mold_pickaxe_head.png` - Molde de cabeza de pico
+- `mold_pommel.png` - Molde de pomo
+
+**MOLDES DE CABEZAS (7):**
+- `mold_knife_blade.png` - Molde de hoja de cuchillo
+- `mold_sword_blade.png` - Molde de hoja de espada
+- `mold_katana_blade.png` - Molde de hoja de katana
+- `mold_spearhead.png` - Molde de punta de lanza
 - `mold_axe_head.png` - Molde de cabeza de hacha
+- `mold_pickaxe_head.png` - Molde de cabeza de pico
+- `mold_large_plate.png` - Molde de placa grande
+
+**MOLDES EXTRA (2):**
+- `mold_blank.png` - Molde vacío (material base)
 - `mold_ingot.png` - Molde de lingote
 
-**Cantidad estimada**: **~8-12 texturas de moldes**
+**Cantidad estimada**: **14 texturas de moldes** (vs 8-12 del sistema anterior)
 
 #### 5. **Fluidos** (Sin texturas aún)
 Metales fundidos que aparecerán en tanques:
@@ -72,15 +99,15 @@ Metales fundidos que aparecerán en tanques:
 
 ## 📊 Resumen Total de Texturas Necesarias
 
-| Categoría | Cantidad Estimada | Estado |
-|-----------|------------------|--------|
-| Partes de armas | ~60 | ❌ Pendiente |
-| Armas completas | ~80 | ❌ Pendiente |
-| Bloques | ~10 | ❌ Pendiente |
-| Moldes | ~12 | ❌ Pendiente |
-| Fluidos | ~20 | ❌ Pendiente |
-| GUI | ~8 | ❌ Pendiente |
-| **TOTAL** | **~190 texturas** | **0% completo** |
+| Categoría | Cantidad Estimada | Estado | Notas |
+|-----------|------------------|--------|-------|
+| Partes de armas | ~120 | ❌ Pendiente | Sistema optimizado: 12 tipos × 10 materiales |
+| Armas completas | ~0 | ✅ No necesarias | Renderizado dinámico de partes |
+| Bloques | ~10 | ❌ Pendiente | Smeltery, casting, stations |
+| Moldes | ~14 | ❌ Pendiente | 5 comodín + 7 cabezas + 2 extra |
+| Fluidos | ~20 | ❌ Pendiente | Still + flow por material |
+| GUI | ~8 | ❌ Pendiente | Interfaces de bloques |
+| **TOTAL** | **~172 texturas** | **0% completo** | Reducido de ~190 gracias al sistema optimizado |
 
 ---
 

@@ -9,22 +9,30 @@
 ### ✨ Características Principales
 
 - 🔥 **Sistema de Fundición** - Estructura multibloque para derretir lingotes en metal líquido
-- ⚔️ **Armas Modulares** - 8 tipos de armas con partes intercambiables
+- ⚔️ **Armas Modulares Optimizadas** - 10 tipos de armas con sistema de partes reutilizables
+- 🔧 **5 Partes Comodín** - Vara, Asta, Ligadura, Guarda y Pomo se usan en múltiples armas
 - 🎯 **Compatible con Better Combat** - Integración completa con mecánicas de combate mejoradas
 - ⚖️ **Sistema de Trade-offs** - Cada material tiene ventajas y desventajas balanceadas
 - 🛠️ **10 Materiales** - Desde madera hasta netherite, cada uno con propiedades únicas
 - 👥 **Ideal para Roleplay** - Perfecto para servidores con herreros que vendan armas
+- 📦 **Eficiencia de Assets** - Solo 12 moldes necesarios gracias a la reutilización inteligente
 
 ### 🗡️ Armas Disponibles
 
-1. **Daga** - Rápida, corto alcance
-2. **Espada** - Balanceada, versátil
-3. **Espada Larga / Claymore** - Alto daño, dos manos, lenta
-4. **Katana** - Velocidad media-alta, estilo japonés
-5. **Lanza** - Máximo alcance, daño moderado
-6. **Hacha** - Alto daño por golpe, lenta
-7. **Pico** - Herramienta de minería
-8. **Azada** - Herramienta/arma versátil
+| Arma | Receta (Partes) | Característica |
+|------|----------------|----------------|
+| **Daga** | Hoja de Cuchillo + Guarda + Vara | Rápida, corto alcance |
+| **Espada** | Hoja de Espada + Guarda + Vara + Pomo | Balanceada, versátil |
+| **Claymore** | *Misma Hoja* + Guarda + **Asta** + Pomo | Alto daño, dos manos |
+| **Katana** | Hoja de Katana + Ligadura + Vara | Velocidad alta, durabilidad baja |
+| **Lanza** | Punta de Lanza + Asta + Pomo | Máximo alcance |
+| **Hacha** | Cabeza de Hacha + Vara + Ligadura | Alto daño, lenta |
+| **Alabarda** | *Misma Cabeza* + **Asta** + Ligadura | Hacha de dos manos |
+| **Pico** | Cabeza de Pico + Vara + Ligadura | Minería especializada |
+| **Pala** | Placa Grande + Asta + Ligadura | Tierra/arena |
+| **Azada** | Cabeza modificada + Vara | Herramienta agrícola |
+
+**💡 Innovación**: La misma Hoja de Espada sirve para Espada (una mano) y Claymore (dos manos) cambiando solo el mango. ¡Máxima reutilización!
 
 ## 🎮 Estado del Desarrollo
 
@@ -87,14 +95,20 @@ src/main/java/com/paulo/moltensmith/
 
 ## 📚 Documentación
 
-- [Plan de Desarrollo Completo](docs/PLANNING.md)
-- [Fase 1 Completada](docs/FASE1_COMPLETADA.md)
-- [Información de Texturas](docs/TEXTURAS_INFO.md)
+- [📋 Plan de Desarrollo Completo](docs/PLANNING.md) - 8 fases de desarrollo
+- [✅ Fase 1 Completada](docs/FASE1_COMPLETADA.md) - Sistema de materiales
+- [🔧 **NUEVO**: Sistema de Partes Optimizado](docs/SISTEMA_PARTES_OPTIMIZADO.md) - Explicación detallada de las partes reutilizables
+- [🎨 Información de Texturas](docs/TEXTURAS_INFO.md) - ~172 texturas necesarias
 
 ## 🎨 Contribuir
 
 ¡Las contribuciones son bienvenidas! Especialmente:
-- 🎨 **Artistas** - Necesitamos ~190 texturas (ver [TEXTURAS_INFO.md](docs/TEXTURAS_INFO.md))
+- 🎨 **Artistas** - Necesitamos ~172 texturas (ver [TEXTURAS_INFO.md](docs/TEXTURAS_INFO.md))
+  - 120 texturas de partes (12 tipos × 10 materiales)
+  - 14 moldes
+  - 20 fluidos
+  - 10 bloques
+  - 8 GUIs
 - 💻 **Programadores** - Ayuda con mecánicas y features
 - 🌍 **Traductores** - Traducciones a otros idiomas
 - 🐛 **Testers** - Reportar bugs y sugerencias
