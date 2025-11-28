@@ -20,5 +20,21 @@
   "material.moltensmith.copper": "Copper",
   "material.moltensmith.emerald": "Emerald",
   "material.moltensmith.obsidian": "Obsidian",
-  "material.moltensmith.bone": "Bone"
+  "material.moltensmith.bone": "Bone",
+
+  "item.moltensmith.knife_blade": "Knife Blade",
+  "item.moltensmith.sword_blade": "Sword Blade",
+  "item.moltensmith.katana_blade": "Katana Blade",
+  "item.moltensmith.spearhead": "Spearhead",
+  "item.moltensmith.axe_head": "Axe Head",
+  "item.moltensmith.pickaxe_head": "Pickaxe Head",
+  "item.moltensmith.shovel_head": "Shovel Head",
+  "item.moltensmith.short_handle": "Short Handle",
+  "item.moltensmith.medium_handle": "Medium Handle",
+  "item.moltensmith.long_handle": "Long Handle",
+  "item.moltensmith.small_guard": "Small Guard",
+  "item.moltensmith.medium_guard": "Medium Guard",
+  "item.moltensmith.large_guard": "Large Guard",
+  "item.moltensmith.binding": "Binding",
+  "item.moltensmith.pommel": "Pommel"
 }

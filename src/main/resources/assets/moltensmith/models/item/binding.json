@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "minecraft:item/string"
+  },
+  "comment": "TODO: Create binding/wrap texture (leather/metal wrap)"
+}

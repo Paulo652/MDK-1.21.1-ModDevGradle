@@ -3,6 +3,7 @@ package com.paulo.moltensmith;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
+import com.paulo.moltensmith.items.ModItems;
 import com.paulo.moltensmith.materials.MaterialRegistry;
 
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -59,9 +60,33 @@ public class MoltenSmith {
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("moltensmith_tab", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.moltensmith")) //The language key for the title of your CreativeModeTab
             .withTabsBefore(CreativeModeTabs.COMBAT)
-            .icon(() -> EXAMPLE_ITEM.get().getDefaultInstance())
+            .icon(() -> ModItems.SWORD_BLADE.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
-                output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
+                // Tool Parts - Heads/Blades
+                output.accept(ModItems.KNIFE_BLADE.get());
+                output.accept(ModItems.SWORD_BLADE.get());
+                output.accept(ModItems.KATANA_BLADE.get());
+                output.accept(ModItems.SPEARHEAD.get());
+                output.accept(ModItems.AXE_HEAD.get());
+                output.accept(ModItems.PICKAXE_HEAD.get());
+                output.accept(ModItems.SHOVEL_HEAD.get());
+                
+                // Tool Parts - Handles
+                output.accept(ModItems.SHORT_HANDLE.get());
+                output.accept(ModItems.MEDIUM_HANDLE.get());
+                output.accept(ModItems.LONG_HANDLE.get());
+                
+                // Tool Parts - Guards
+                output.accept(ModItems.SMALL_GUARD.get());
+                output.accept(ModItems.MEDIUM_GUARD.get());
+                output.accept(ModItems.LARGE_GUARD.get());
+                
+                // Tool Parts - Other
+                output.accept(ModItems.BINDING.get());
+                output.accept(ModItems.POMMEL.get());
+                
+                // Example items (remove later)
+                output.accept(EXAMPLE_ITEM.get());
             }).build());
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
@@ -74,6 +99,8 @@ public class MoltenSmith {
         BLOCKS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so items get registered
         ITEMS.register(modEventBus);
+        // Register MoltenSmith items
+        ModItems.ITEMS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so tabs get registered
         CREATIVE_MODE_TABS.register(modEventBus);
 
