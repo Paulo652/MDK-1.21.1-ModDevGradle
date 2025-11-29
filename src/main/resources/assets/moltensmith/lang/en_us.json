@@ -36,5 +36,14 @@
   "item.moltensmith.medium_guard": "Medium Guard",
   "item.moltensmith.large_guard": "Large Guard",
   "item.moltensmith.binding": "Binding",
-  "item.moltensmith.pommel": "Pommel"
+  "item.moltensmith.pommel": "Pommel",
+
+  "block.moltensmith.smeltery_controller": "Smeltery Controller",
+  "block.moltensmith.smeltery_bricks": "Smeltery Bricks",
+  "block.moltensmith.smeltery_tank": "Smeltery Tank",
+  "block.moltensmith.smeltery_drain": "Smeltery Drain",
+  "block.moltensmith.casting_table": "Casting Table",
+  "block.moltensmith.casting_basin": "Casting Basin",
+  "block.moltensmith.tool_station": "Tool Station",
+  "block.moltensmith.tool_forge": "Tool Forge"
 }

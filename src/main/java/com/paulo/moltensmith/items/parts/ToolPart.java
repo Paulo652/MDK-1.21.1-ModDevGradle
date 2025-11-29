@@ -32,11 +32,16 @@ public class ToolPart extends Item {
      * Get the material of this part from NBT
      */
     public static Material getMaterial(ItemStack stack) {
-        if (stack.isEmpty() || !stack.hasTag()) {
+        if (stack.isEmpty() || !stack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA)) {
             return null;
         }
         
-        String materialId = stack.getTag().getString("Material");
+        var customData = stack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
+        if (customData == null) {
+            return null;
+        }
+        
+        String materialId = customData.copyTag().getString("Material");
         if (materialId.isEmpty()) {
             return null;
         }
@@ -48,7 +53,10 @@ public class ToolPart extends Item {
      * Set the material of this part in NBT
      */
     public static void setMaterial(ItemStack stack, Material material) {
-        stack.getOrCreateTag().putString("Material", material.getId().toString());
+        var tag = new net.minecraft.nbt.CompoundTag();
+        tag.putString("Material", material.getId().toString());
+        stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, 
+            net.minecraft.world.item.component.CustomData.of(tag));
     }
     
     /**
@@ -68,8 +76,8 @@ public class ToolPart extends Item {
             // Material name
             tooltip.add(Component.literal("Material: ")
                     .withStyle(ChatFormatting.GRAY)
-                    .append(Component.literal(material.getDisplayName())
-                            .withStyle(ChatFormatting.YELLOW)));
+                    .append(material.getDisplayName()
+                            .copy().withStyle(ChatFormatting.YELLOW)));
             
             // Part type
             tooltip.add(Component.literal("Type: ")
@@ -78,17 +86,17 @@ public class ToolPart extends Item {
                             .withStyle(ChatFormatting.AQUA)));
             
             // Material stats preview
-            if (flag.isAdvanced()) {
+            if (flag.hasShiftDown()) {
                 tooltip.add(Component.empty());
                 tooltip.add(Component.literal("Material Stats:")
                         .withStyle(ChatFormatting.GOLD));
                 
                 var stats = material.getStats();
-                tooltip.add(Component.literal(" • Durability: " + stats.durability())
+                tooltip.add(Component.literal(" • Durability: " + stats.getDurability())
                         .withStyle(ChatFormatting.GREEN));
-                tooltip.add(Component.literal(" • Attack Damage: " + stats.attackDamage())
+                tooltip.add(Component.literal(" • Attack Damage: " + stats.getAttackDamage())
                         .withStyle(ChatFormatting.RED));
-                tooltip.add(Component.literal(" • Mining Speed: " + stats.miningSpeed())
+                tooltip.add(Component.literal(" • Mining Speed: " + stats.getMiningSpeed())
                         .withStyle(ChatFormatting.BLUE));
             }
         } else {

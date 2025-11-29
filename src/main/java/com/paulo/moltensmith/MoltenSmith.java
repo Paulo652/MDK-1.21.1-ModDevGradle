@@ -3,6 +3,7 @@ package com.paulo.moltensmith;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
+import com.paulo.moltensmith.blocks.ModBlocks;
 import com.paulo.moltensmith.items.ModItems;
 import com.paulo.moltensmith.materials.MaterialRegistry;
 
@@ -85,6 +86,18 @@ public class MoltenSmith {
                 output.accept(ModItems.BINDING.get());
                 output.accept(ModItems.POMMEL.get());
                 
+                // Smeltery Blocks
+                output.accept(ModBlocks.SMELTERY_CONTROLLER.get());
+                output.accept(ModBlocks.SMELTERY_BRICKS.get());
+                output.accept(ModBlocks.SMELTERY_TANK.get());
+                output.accept(ModBlocks.SMELTERY_DRAIN.get());
+                output.accept(ModBlocks.CASTING_TABLE.get());
+                output.accept(ModBlocks.CASTING_BASIN.get());
+                
+                // Tool Station Blocks
+                output.accept(ModBlocks.TOOL_STATION.get());
+                output.accept(ModBlocks.TOOL_FORGE.get());
+                
                 // Example items (remove later)
                 output.accept(EXAMPLE_ITEM.get());
             }).build());
@@ -94,12 +107,13 @@ public class MoltenSmith {
     public MoltenSmith(IEventBus modEventBus, ModContainer modContainer) {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
-
         // Register the Deferred Register to the mod event bus so blocks get registered
         BLOCKS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so items get registered
         ITEMS.register(modEventBus);
-        // Register MoltenSmith items
+        // Register MoltenSmith blocks and items
+        ModBlocks.BLOCKS.register(modEventBus);
+        ModBlocks.BLOCK_ITEMS.register(modEventBus);
         ModItems.ITEMS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so tabs get registered
         CREATIVE_MODE_TABS.register(modEventBus);
