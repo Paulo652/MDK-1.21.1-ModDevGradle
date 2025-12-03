@@ -25,12 +25,22 @@
 
 ## 🔄 2. El Ciclo de Herrería (The Core Loop)
 
-### Proceso de creación en 4 fases obligatorias:
+### Proceso de creación en 5 fases:
 
 ```
-🔥 HEATING → 🔨 FORGING → 💧 QUENCHING → 🔧 ASSEMBLY
-(Calentar)   (Forjar)     (Templar)      (Ensamblar)
+📐 DRAFTING → 🔥 HEATING → 🔨 FORGING → 💧 QUENCHING → 🔧 ASSEMBLY
+(Diseñar)    (Calentar)   (Forjar)     (Templar)      (Ensamblar)
 ```
+
+### 📐 **Fase 0: DRAFTING (Diseño de Planos)**
+**Objetivo**: Crear las plantillas técnicas necesarias para forjar
+
+- **Dónde**: Drafting Station (Mesa de Delineante)
+- **Input**: Template Base (papel en blanco) + Ink Sac (tinta)
+- **Acción**: Seleccionar diseño del catálogo en la GUI
+- **Resultado**: Template específico (ej. "Sword Blade Template")
+- **Visual**: Libro abierto en la mesa, páginas pasando
+- **Concepto**: "Consultar el Manual del Maestro Herrero"
 
 ### 🔥 **Fase 1: HEATING (Calentamiento)**
 **Objetivo**: Calentar lingotes hasta que sean maleables
@@ -75,6 +85,186 @@
 ---
 
 ## 🏗️ 3. Las Estaciones de Trabajo (Workstations)
+
+### 📐 **Estación 0: DRAFTING STATION** (Mesa de Delineante)
+*Para copiar planos técnicos del Manual del Maestro Herrero*
+
+#### Estructura:
+```
+┌─────────────────────┐
+│  Drafting Station   │ ← Escritorio inclinado con libro
+└─────────────────────┘
+```
+
+**Tipo de Bloque**: Individual (no multibloque)
+
+#### Construcción:
+- Crafteo: 4 Planks + 2 Sticks + 1 Book
+- Colocar en el mundo como mesa de trabajo
+
+#### Modelo Visual:
+
+**Estado Inactivo**:
+```
+📕 Libro grande de cuero CERRADO sobre escritorio inclinado
+🖋️ Tintero al lado
+📏 Regla y compás decorativos (opcional)
+```
+
+**Estado Activo** (jugador usando):
+```
+📖 Libro se ABRE animadamente (tapa rota -90°)
+📄 Páginas pasan aleatoriamente (animación tipo enchanting table pero horizontal)
+✨ Partículas sutiles de polvo/tinta (opcional)
+```
+
+#### Funcionamiento:
+
+##### **GUI Estilo Libro Abierto (Book-style)**:
+```
+┌─────────────────────────────────────────────────────────────┐
+│  [Slot Izq: Template Base] [Slot Der: Ink Sac/Black Dye]  │
+├─────────────────────────────────────────────────────────────┤
+│                    LIBRO ABIERTO (2 páginas)                │
+│  ┌──────────────────────┬──────────────────────┐            │
+│  │  PÁGINA IZQUIERDA    │  PÁGINA DERECHA      │            │
+│  │                      │                      │            │
+│  │  ╔═══════════╗       │   Arma seleccionada: │            │
+│  │  ║   DAGGER  ║       │   🗡️ DAGGER         │            │
+│  │  ╚═══════════╝       │                      │            │
+│  │                      │   Componentes:       │            │
+│  │    [Ilustración]     │   ┌────────────────┐ │            │
+│  │        ⚔️            │   │ ☑ Knife Blade  │ │            │
+│  │     /  │  \          │   │ ☐ Small Guard  │ ← Click     │
+│  │    ╱   │   ╲         │   │ ☐ Short Handle │ │            │
+│  │   1    2    3        │   │ ☐ Pommel       │ │            │
+│  │  Blade Guard Handle  │   └────────────────┘ │            │
+│  │                      │                      │            │
+│  │  [< Prev] [Next >]   │   Requisitos:        │            │
+│  │                      │   • 1 Lingote        │            │
+│  └──────────────────────┴──────────────────────┘            │
+├─────────────────────────────────────────────────────────────┤
+│  [Slot Output: Template de parte seleccionada]             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Página izquierda**: Ilustración del arma completa con números en cada parte  
+**Página derecha**: Lista de componentes clickeables con checkboxes
+
+##### **Paso 1: Preparar Materiales**
+- Obtener **Template Base** (crafteo: 1 Paper + 1 Blue Dye = papel azul en blanco)
+- Conseguir **Ink Sac** (de squid) o **Black Dye**
+
+##### **Paso 2: Abrir el Manual**
+1. Click derecho en Drafting Station → Abre GUI tipo libro
+2. **Efecto visual**: El libro físico en la mesa se abre animadamente
+3. **Vista inicial**: Primera arma del catálogo (Dagger)
+
+##### **Paso 3: Navegar el Catálogo**
+- **Botones [< Prev] [Next >]**: Cambiar entre páginas de armas
+- **Cada página muestra**:
+  - Ilustración del arma completa estilo blueprint/schematic
+  - Números en cada componente (1=Blade, 2=Guard, 3=Handle, etc.)
+  - Lista de partes con checkboxes en página derecha
+  - Requisitos de materiales para cada parte
+  
+**Armas disponibles** (basadas en los sprites existentes):
+```
+=== ARMAS BÁSICAS (Desbloqueadas por defecto) ===
+Página 1: Dagger (Daga) - 16x16
+Página 2: Sword (Espada) - 16x16
+Página 3: Axe (Hacha de batalla) - 16x16
+Página 4: Pickaxe (Pico) - 16x16
+Página 5: Shovel (Pala) - 16x16
+
+=== ARMAS AVANZADAS (Requieren Lost Pages) ===
+Página 6: 🔒 Katana - 32x32
+Página 7: 🔒 Longsword/Greatsword (Mandoble) - Requiere página perdida
+Página 8: 🔒 Spear (Lanza) - 32x32
+Página 9: 🔒 Halberd (Alabarda) - Requiere página perdida
+Página 10: 🔒 Rapier (Estoque) - Requiere página perdida
+```
+
+##### **Paso 4: Seleccionar Parte**
+1. Colocar Template Base y Ink Sac en los slots superiores
+2. En la página del arma deseada, **click en el checkbox** de la parte específica
+   - Ejemplo: En página "Sword", click en "☐ Sword Blade"
+   - El checkbox se marca: "☑ Sword Blade"
+3. La parte seleccionada aparece en el slot de output
+4. **Animación**: Las páginas del libro pasan mostrando detalles de esa parte específica
+
+##### **Paso 5: Copiar Plano**
+- Click en el output slot para recoger la Template
+- **Consume**: 1 Template Base + 1 Ink Sac
+- **Sonido**: Scratching pen (pluma escribiendo sobre papel)
+- **Efecto visual**: 
+  - Partículas de tinta flotando del libro al output
+  - Páginas pasan rápidamente
+- **Resultado**: Template de la parte específica lista para el yunque
+
+#### Ventajas del Sistema:
+
+✅ **Descubrimiento Contextual**: Ves armas completas y entiendes qué partes necesitas  
+✅ **Visual Intuitivo**: Ilustraciones estilo blueprint muestran cómo se ensambla cada arma  
+✅ **Inmersión Total**: El libro físico se abre en la mesa, páginas pasan al navegar  
+✅ **Progresión Natural**: Armas básicas desbloqueadas, avanzadas requieren páginas raras  
+✅ **Simplicidad**: Solo papel azul + tinta, seleccionas parte específica del arma  
+✅ **No Clutter**: No guardas 50 templates, solo creas las que vas a usar inmediatamente
+
+#### Notas Técnicas:
+**BlockEntity**:
+```java
+DraftingStationBlockEntity {
+    int numPlayersUsing; // Contador de jugadores con GUI abierta
+    float bookOpenProgress; // 0.0-1.0 para animación de apertura
+    int pageFlipTick; // Timer para animación de páginas
+    Set<ResourceLocation> unlockedWeapons; // Armas desbloqueadas (por páginas)
+    
+    // Métodos
+    boolean isWeaponUnlocked(WeaponType weapon);
+    void unlockWeapon(ResourceLocation weaponId);
+}
+```
+```
+
+**Modelo (Blockbench)**:
+- Escritorio base (estático)
+- Libro con 2 huesos (bones):
+  - `book_cover`: Tapa que rota de 0° a -90°
+  - `pages`: Páginas que se mueven aleatoriamente
+- Tintero y pluma (decoración estática)
+
+**Animación**:
+```java
+// En BlockEntityRenderer
+float progress = Mth.lerp(partialTick, 
+    entity.bookOpenProgressOld, 
+    entity.bookOpenProgress);
+bookCoverBone.xRot = progress * -1.571f; // -90° en radianes
+
+// Flip páginas mientras está abierto
+**GUI (Custom Screen)**:
+- Extender de `AbstractContainerScreen`
+- **Background**: Textura de libro abierto (2 páginas, 256x180px estilo Minecraft)
+- **Página Izquierda**: 
+  - Renderizar ilustración del arma (ItemStack render o textura custom)
+  - Números flotantes en cada componente
+  - Botones [< Prev] [Next >] abajo
+- **Página Derecha**:
+  - Lista de componentes con checkboxes clickeables
+  - Tooltip al hover mostrando stats requeridas
+  - Requisitos (lingotes, tamaño de yunque)
+- **Lógica**:
+  - `currentWeaponPage` (int) para saber qué arma mostrar
+  - `List<WeaponType> availableWeapons` filtra según desbloqueos
+  - Click en checkbox → actualiza output slot si hay materiales
+
+**GUI (Custom Screen)**:
+- Extender de `AbstractContainerScreen`
+- Renderizar lista scrolleable de diseños con iconos
+- Similar a Stonecutter pero con 2 input slots
+
+---
 
 ### 🔥 **Estación 1: EMBER HEARTH** (La Fragua)
 *Para calentar metales hasta hacerlos maleables*
@@ -236,18 +426,21 @@ Partes pequeñas                  Partes largas (hojas, astas)
 
 #### Estructura:
 ```
-1 Bloque:                 2 Bloques:                3 Bloques:
-┌──────────┐              ┌──────────┬──────────┐   ┌──────────┬──────────┬──────────┐
-│  Bench   │              │ Bench L  │ Bench R  │   │ Bench L  │ Bench M  │ Bench R  │
-└──────────┘              └──────────┴──────────┘   └──────────┴──────────┴──────────┘
-Armas cortas              Armas medianas            Armas largas (lanza, alabarda)
+1 Bloque:                          2 Bloques:
+┌──────────┐                       ┌──────────┬──────────┐
+│  Bench   │                       │ Bench L  │ Bench R  │
+└──────────┘                       └──────────┴──────────┘
+Armas cortas/medianas              Armas largas (32x32 sprites)
+(Daga, Espada, Hacha)              (Katana, Lanza, Mandoble)
 ```
 
-**Tipo de Multibloque**: Horizontal Dinámico (1-3 bloques)
+**Tipo de Multibloque**: Horizontal (1-2 bloques máximo)
 
 #### Construcción:
-- **Colocación inteligente**: Al colocar bloques adyacentes (EAST/WEST), se expanden automáticamente
-- **Límite**: Máximo 3 bloques en línea
+- **Mesa Simple**: 1 bloque para armas con sprites 16x16
+- **Mesa Doble**: 2 bloques lado a lado (EAST/WEST) para armas con sprites 32x32
+- **Detección automática**: Al colocar un segundo bloque adyacente, se forma el multibloque
+- **Límite**: Máximo 2 bloques en línea (suficiente para sprites 32x32)
 ---
 
 ## 🛠️ 4. Items Esenciales del Herrero
@@ -274,20 +467,46 @@ Armas cortas              Armas medianas            Armas largas (lanza, alabard
 - **Efectos**: Sonido metálico + partículas de chispas
 
 ### 📋 **Templates (Plantillas)**
-**Función**: Definir qué parte se va a forjar
+**Función**: Definir qué parte se va a forjar en el yunque
 
-**7 tipos de templates:**
-1. Knife Blade Template
-2. Sword Blade Template
-3. Katana Blade Template
-4. Spearhead Template
-5. Axe Head Template
-6. Pickaxe Head Template
-7. Shovel Head Template
+**Obtención**: Se crean en la **Drafting Station** copiando diseños del manual
 
-- **Crafteo**: Paper + material correspondiente (ej. Iron Ingot para iron template)
-- **Usos**: 1 uso (se consume al forjar) o durabilidad baja
-- **Mecánica**: Se coloca sobre el yunque antes de forjar
+**Templates disponibles** (según partes de las armas):
+
+**Hojas/Cabezas (Blades/Heads):**
+1. Knife Blade Template (16x16)
+2. Sword Blade Template (16x16)
+3. Katana Blade Template (32x32) 🔒
+4. Spearhead Template (32x32) 🔒
+5. Axe Head Template (16x16)
+6. Pickaxe Head Template (16x16)
+7. Shovel Head Template (16x16)
+
+**Mangos (Handles):**
+8. Short Handle Template (16x16)
+9. Medium Handle Template (16x16)
+10. Long Handle Template (32x32) 🔒
+
+**Guardas (Guards):**
+11. Small Guard Template (16x16)
+12. Medium Guard Template (16x16)
+13. Large Guard Template (16x16)
+
+**Accesorios:**
+14. Binding Template (16x16)
+15. Pommel Template (16x16)
+
+#### **Proceso de Creación**:
+1. **Craftear Template Base**: 1 Paper + 1 Blue Dye = Papel azul en blanco
+2. **Ir a Drafting Station**: Abrir GUI con click derecho
+3. **Seleccionar diseño**: Del catálogo visual completo
+4. **Copiar con tinta**: 1 Template Base + 1 Ink Sac = 1 Template específica
+
+#### **Características**:
+- **Usos**: 1 uso (se consume al forjar completamente)
+- **Visual**: Papel azul con silueta negra de la pieza
+- **Tooltip**: Muestra requisitos (ej. "Requiere 2 lingotes calientes")
+- **Mecánica**: Se coloca sobre el yunque antes de comenzar el forjado
 
 ---
 
@@ -319,13 +538,14 @@ TemperatureComponent {
 ```java
 BlockState properties:
 - facing: NORTH/SOUTH/EAST/WEST
-- part: SINGLE / LEFT / MIDDLE / RIGHT
+- part: SINGLE / LEFT / RIGHT  // Máximo 2 bloques
 - formed: true/false
 
 Detección:
 - onPlace() → checkNeighbors(EAST/WEST)
 - Si hay bloque compatible → formar multibloque
 - Actualizar modelos según posición
+- Límite: 2 bloques máximo (suficiente para sprites 32x32)
 ```
 
 ### **C. BlockEntity Renderer (BER)**
@@ -384,13 +604,16 @@ RecipeValidator {
 - **Dark Matter**: Material de forja end-game
 - **Edelwood**: Madera mágica para mangos con encantamientos mejorados
 
-### **Farmer's Delight** 🍲
-- **Cooking Oil**: Alternativa al aceite para templado
-
-### **Mekanism** ⚙️
-- **Hydrogen**: Gas para templado avanzado (mayor durabilidad)
-
----
+### **Early Game** (Fase 1-2)
+```
+🌳 Madera/Piedra
+├─ Crafteo vanilla normal (sin mod)
+├─ Tutorial: Construir Drafting Station
+├─ Crear Template Base (papel azul)
+├─ Copiar primer template (Knife Blade)
+├─ Construir Ember Hearth básico
+└─ Primeras herramientas: Tongs, Hammer
+```
 
 ## 📈 7. Progresión del Jugador
 
@@ -399,14 +622,15 @@ RecipeValidator {
 🌳 Madera/Piedra
 ├─ Crafteo vanilla normal (sin mod)
 ├─ Introducción: Construir Ember Hearth básico
-└─ Primeras herramientas: Tongs, Hammer
-```
-
 ### **Mid Game** (Fase 3-5)
 ```
 ⛏️ Hierro/Cobre
+├─ Expandir catálogo de templates (explorar Drafting Station)
 ├─ Construir estaciones completas (Anvil, Tank, Bench)
 ├─ Forjar primeras partes de hierro
+├─ Experimentar con combinaciones de materiales
+└─ Crear armas modulares básicas
+```Forjar primeras partes de hierro
 ├─ Experimentar con combinaciones de materiales
 └─ Crear armas modulares básicas
 ```
@@ -430,16 +654,25 @@ RecipeValidator {
 ```
 
 ---
+**P: ¿Tengo que memorizar crafteos de templates?**  
+R: No, la Drafting Station muestra cada arma ilustrada como blueprint. Ves todos los componentes numerados y seleccionas el que necesitas.
 
-## ❓ 8. FAQ de Diseño
+**P: ¿Cómo desbloqueo armas avanzadas como Katana o Halberd?**  
+R: Busca "Lost Pages" (Páginas Perdidas) en cofres de dungeons, tradea con Weaponsmiths Master, o derrota bosses. Usa la página en la Drafting Station para desbloquear permanentemente esa arma.
+
+**P: ¿Las Lost Pages se consumen al usarlas?**  
+R: Sí, pero el desbloqueo es permanente. Una vez desbloqueada, esa arma siempre estará disponible en esa Drafting Station (o para ese jugador si usas sistema global).
 
 **P: ¿Por qué no GUIs?**  
 R: Mayor inmersión, todo visual en 3D, más satisfactorio y cinematográfico.
 
 **P: ¿Y si el metal se enfría en medio del forjado?**  
 R: Debes recalentar los lingotes en la fragua y reintentar. Añade tensión al proceso.
+**P: ¿Cómo sé cuántos lingotes necesito?**  
+R: Las templates tienen tooltip indicando cantidad requerida. También puedes verlo en la Drafting Station antes de copiar el plano.
 
-**P: ¿Puedo mezclar materiales?**  
+**P: ¿Tengo que memorizar crafteos de templates?**  
+R: No, la Drafting Station muestra todos los diseños disponibles visualmente. Solo necesitas papel azul + tinta.
 R: Sí, ej. mango de madera + hoja de hierro. Las stats se combinan.
 
 **P: ¿Cómo sé cuántos lingotes necesito?**  
@@ -453,21 +686,190 @@ R: Sí, con Create (presses, deployers) o mejores combustibles en la fragua.
 
 ---
 
-## 🎯 9. Diferencias Clave vs Tinkers' Construct
+### Concepto Narrativo:
 
-| Aspecto | Tinkers' Construct | MoltenSmith |
-|---------|-------------------|-------------|
-| **Fluidos** | Sí (metal fundido) | ❌ No |
-| **Moldes** | Sí (12+ tipos) | ❌ No (usa templates) |
-| **GUIs** | Múltiples GUIs complejas | ❌ Cero GUIs |
-| **Visualización** | Solo en GUI | ✅ Todo en mundo 3D |
-| **Proceso** | Fundir → Moldear | ✅ Calentar → Forjar → Templar → Ensamblar |
-| **Realismo** | Arcade | ✅ Físico/Realista |
-| **Multibloque** | Vertical 3D complejo | ✅ Horizontal simple 1-3 bloques |
-| **Roleplay** | Limitado | ✅ Alto (talleres, comercio) |
+El **"Manual del Maestro Herrero"** es el libro que aparece en la Drafting Station. Según el lore del mod:
+
+> *"Este antiguo tomo fue escrito por los primeros maestros herreros, quienes documentaron meticulosamente cada diseño de arma conocido. Cada página ilustra un arma completa con precisión técnica, mostrando cada componente numerado. Al consultar sus páginas desgastadas y seleccionar una parte específica, puedes copiar el plano técnico a papel usando tinta común."*
+
+### En Juego:
+
+#### **Mecánica Core**:
+- **Visualización tipo Catálogo**: Cada página = 1 arma completa ilustrada
+- **Ilustraciones Blueprint**: Dibujos técnicos estilo ingeniería medieval
+- **Navegación**: Botones para pasar páginas entre diferentes armas
+- **Selección Interactiva**: Click en componentes específicos del arma para copiarlos
+
+#### **Sistema de Ilustraciones**:
+```
+Ejemplo - Página de "SWORD":
+┌─────────────────────────┐
+│      ⚔️ ESPADA         │
+│                         │
+│         1               │
+---
+
+## 📊 11. Resumen Visual del Sistema Completo
+
+### Flujo de Juego Completo:
+```
+1. 🏗️ Construir Drafting Station
+         ↓
+2. 📖 Abrir Manual del Maestro Herrero
+         ↓
+3. 📄 Navegar páginas de armas (ilustraciones blueprint)
+         ↓
+4. 🔓 (Opcional) Desbloquear armas avanzadas con Lost Pages
+         ↓
+5. ☑️ Seleccionar componente específico del arma deseada
+         ↓
+6. 🖋️ Copiar plano con Template Base + Tinta
+         ↓
+7. 🔥 Calentar lingotes en Ember Hearth
+         ↓
+8. 🔨 Forjar parte en Grand Anvil usando Template
+         ↓
+9. 💧 Templar parte caliente en Quench Tank
+         ↓
+10. 🔧 Ensamblar partes frías en Armorer's Bench
+         ↓
+11. ⚔️ Obtener arma modular completa!
+```
+
+### Ejemplo Práctico - Crear una Katana:
+
+**Paso 1**: Encontrar "Lost Page: Katana" en cofre de End City  
+**Paso 2**: Click derecho en Drafting Station con página → Desbloquea Katana  
+**Paso 3**: Abrir GUI, navegar hasta página "KATANA"  
+**Paso 4**: Ver ilustración blueprint de Katana (3 partes: Blade + Binding + Handle)  
+**Paso 5**: Click en checkbox "☐ Katana Blade" → Copiar template  
+**Paso 6**: Repetir para Binding y Short Handle  
+**Paso 7**: Forjar las 3 partes con sus respectivas templates  
+**Paso 8**: Ensamblar en Armorer's Bench (2 bloques - necesario para Katana Blade 32x32)  
+**Paso 9**: Obtener Katana completa con stats combinadas!
+
+**Nota**: La Katana requiere mesa de 2 bloques porque su Katana Blade usa sprite 32x32 que no cabe en 1 bloque.
 
 ---
 
+**Última actualización**: 3 Diciembre 2025 v5.1  
+**Estado**: Concepto final con GUI tipo libro ilustrado + sistema de progresión  
+**Cambios v5.1**: 
+- GUI rediseñada como libro abierto con ilustraciones de armas completas
+- Sistema de navegación por páginas (una arma por página)
+- Selección de componentes específicos con checkboxes
+- Sistema de progresión con Lost Pages para armas avanzadas
+- Desbloqueos permanentes vía loot/trading/bosses
+
+**Próximo paso**: Implementar Drafting Station GUI + Lost Pages + Sistema de Temperatura
+│         │               │
+│      ───┼───            │
+│         3               │
+│         4               │
+│                         │
+│ 1 = Blade (Hoja)       │
+│ 2 = Guard (Guarda)     │
+│ 3 = Handle (Mango)     │
+│ 4 = Pommel (Pomo)      │
+└─────────────────────────┘
+```
+
+#### **Sistema de Progresión - Páginas Perdidas** 🔒:
+
+**Armas Básicas** (Desbloqueadas por defecto - sprites 16x16):
+- ✅ Dagger (Daga) - 1 bloque
+- ✅ Sword (Espada) - 1 bloque
+- ✅ Axe (Hacha de batalla) - 1 bloque
+- ✅ Pickaxe (Pico) - 1 bloque
+- ✅ Shovel (Pala) - 1 bloque
+
+**Armas Avanzadas** (Requieren "Lost Pages" - sprites 32x32):
+- 🔒 Katana → Requiere **"Página Perdida: Katana"** - 2 bloques
+- 🔒 Spear (Lanza) → Requiere **"Página Perdida: Spear"** - 2 bloques
+- 🔒 Greatsword/Longsword (Mandoble) → **"Página Perdida: Greatsword"** - 2 bloques (futuro)
+- 🔒 Halberd (Alabarda) → **"Página Perdida: Halberd"** - 2 bloques (futuro)
+- 🔒 Rapier (Estoque) → **"Página Perdida: Rapier"** - 2 bloques (futuro)
+
+#### **Lost Pages (Páginas Perdidas)** 📄:
+
+**Item: Lost Page**
+- **Apariencia**: Papel viejo, amarillento, con bordes quemados
+- **Tipos**: Cada arma avanzada tiene su página específica
+- **Uso**: Click derecho en Drafting Station con página en mano
+  - Consume la página
+  - Desbloquea permanentemente esa arma en el libro
+  - Efecto: Páginas del libro brillan, sonido mágico
+  - Mensaje: *"Has restaurado el conocimiento perdido de [Arma]"*
+
+**Obtención de Lost Pages**:
+1. **Loot de Cofres**:
+   - Dungeon chests (5% chance)
+   - Stronghold libraries (10% chance)
+   - Nether fortress (7% chance - armas de fuego)
+   - End cities (15% chance - armas exóticas)
+
+2. **Trades con Aldeanos**:
+   - **Weaponsmith Master**: 20 Emeralds → 1 Lost Page (random)
+   - **Cartographer Master**: 15 Emeralds + 5 Paper → 1 Lost Page específica
+
+3. **Boss Drops** (opcional):
+   - Ender Dragon: Lost Page: Rapier (100%)
+   - Wither: Lost Page: Warhammer (100%)
+
+4. **Crafting Avanzado** (costoso):
+   - 8 Paper + 1 Nether Star → Lost Page (random)
+
+#### **Visual en GUI cuando está bloqueado**:
+```
+Página bloqueada:
+┌─────────────────────────┐
+│    🔒 KATANA 🔒        │
+│                         │
+│      [Silueta borrosa]  │
+│         ??????          │
+│                         │
+│  Requiere:              │
+│  📄 Lost Page: Katana  │
+│                         │
+│  "Busca en cofres o     │
+│   tradea con aldeanos"  │
+└─────────────────────────┘
+```
+
+#### **Persistencia de Desbloqueos**:
+- **Nivel de Bloque**: Cada Drafting Station guarda sus desbloqueos (NBT)
+- **Nivel de Jugador**: Alternativa con capability/advancement para compartir entre estaciones
+- **Servers Roleplay**: Admin puede usar comando `/moltensmith unlock <player> <weapon>` para eventos
+
+### Ventajas del Sistema:
+
+✅ **Rejugabilidad**: Incentiva exploración de estructuras para encontrar páginas  
+✅ **Progresión Natural**: Armas básicas accesibles, exóticas requieren esfuerzo  
+✅ **Trading Economy**: Las Lost Pages son valiosas para comercio entre jugadores  
+✅ **Recompensa de Boss**: Da razón extra para pelear Wither/Dragon  
+✅ **Flexibilidad**: Admin puede ajustar qué armas están bloqueadas via configes el libro que aparece en la Drafting Station. Según el lore del mod:
+
+> *"Este antiguo tomo fue escrito por los primeros maestros herreros, quienes documentaron meticulosamente cada diseño de arma conocido. Al consultar sus páginas desgastadas, puedes copiar los planos técnicos a papel usando tinta común."*
+
+### En Juego:
+
+- **No es un item**: El libro solo existe visualmente en la Drafting Station
+- **Funciona como "base de datos"**: Contiene todos los diseños desbloqueables
+- **(Futuro) Sistema de Progresión**: Podrías añadir diseños avanzados que se desbloquean con achievements
+- **Easter Eggs**: Las páginas podrían mostrar texto en Enchanting Table Language cuando se animan
+
+### Alternativa para Roleplay Servers:
+
+Si quieres hacer el sistema más "descubrimiento-based":
+1. Ciertas templates podrían requerir encontrar **"Páginas Perdidas"** (items raros en cofres)
+2. La Drafting Station sin la página correcta mostraría el diseño pero bloqueado
+3. Añade rejugabilidad y exploración
+
+---
+
+**Última actualización**: 3 Diciembre 2025 v5.0  
+**Estado**: Concepto final con Drafting Station integrada  
+**Próximo paso**: Implementar Drafting Station + GUI + Sistema de Temperatura
 **Última actualización**: 2 Diciembre 2025 v4.0  
 **Estado**: Concepto final aprobado, listo para implementación  
 **Próximo paso**: Implementar Items de Herrero + Sistema de Temperatura
@@ -506,24 +908,35 @@ Sword Blade + Medium Guard + Medium Handle + Pommel
 
 **Katana (2 bloques):**
 ```
-Katana Blade + Binding + Short Handle
-= Veloz, menos durable
+Katana Blade (32x32) + Binding + Short Handle
+= Veloz, menos durable, requiere mesa doble
 ```
 
-**Lanza (3 bloques):**
+**Lanza (2 bloques):**
 ```
-Spearhead + Long Handle + Pommel
-= Máximo alcance, dos manos
+Spearhead (32x32) + Long Handle (32x32) + Pommel
+= Máximo alcance, dos manos, requiere mesa doble
+```
+
+#### Mecánicas Especiales:
+- **Validación de tamaño**: Si intentas ensamblar arma 32x32 en mesa de 1 bloque → mensaje de error "Requiere mesa más grande"
+- **Visualización 3D**: Cada parte se renderiza individualmente hasta ser fijada
+- **Escala automática**: Sprites 32x32 se renderizan más grandes que 16x16
+- **Compatibilidad de materiales**: Puedes mezclar (mango de madera + hoja de hierro)
 ```
 
 #### Mecánicas Especiales:
 - **Expansión dinámica**: La mesa detecta el arma y sugiere añadir bloques si es muy larga
 - **Visualización 3D**: Cada parte se renderiza individualmente hasta ser fijada
 - **Compatibilidad de materiales**: Puedes mezclar (mango de madera + hoja de hierro)
-
 #### Notas Técnicas:
 - BlockEntity almacena: parts (Map<SlotType, ItemStack>), joints_fixed (Set<Junction>)
 - BER complejo: renderiza múltiples items con estados (translúcido/sólido)
+- **Escalado de renderizado**: 
+  - Sprites 16x16 → escala 1.0x (normal)
+  - Sprites 32x32 → escala 1.5x o span entre 2 bloques
+- Validador de recetas: compara contra registry de armas válidas
+- Detección de tamaño: Verifica si arma requiere 1 o 2 bloques según sprite sizesdo/sólido)
 - Validador de recetas: compara contra registry de armas válidas
  75%  → Forma reconocible
 100%  → Forma perfecta = Hot Part completa
