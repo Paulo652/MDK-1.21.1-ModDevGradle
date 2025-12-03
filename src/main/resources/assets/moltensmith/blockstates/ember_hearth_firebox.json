@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "moltensmith:block/ember_hearth_firebox_off"
+    },
+    "lit=true": {
+      "model": "moltensmith:block/ember_hearth_firebox"
+    }
+  }
+}

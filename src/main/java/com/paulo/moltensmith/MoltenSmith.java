@@ -3,6 +3,7 @@ package com.paulo.moltensmith;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
+import com.paulo.moltensmith.blockentities.ModBlockEntities;
 import com.paulo.moltensmith.blocks.ModBlocks;
 import com.paulo.moltensmith.items.ModItems;
 import com.paulo.moltensmith.materials.MaterialRegistry;
@@ -98,6 +99,10 @@ public class MoltenSmith {
                 output.accept(ModBlocks.TOOL_STATION.get());
                 output.accept(ModBlocks.TOOL_FORGE.get());
                 
+                // Heating Blocks
+                output.accept(ModBlocks.EMBER_HEARTH_FIREBOX.get());
+                output.accept(ModBlocks.EMBER_HEARTH_BED.get());
+                
                 // Example items (remove later)
                 output.accept(EXAMPLE_ITEM.get());
             }).build());
@@ -115,6 +120,8 @@ public class MoltenSmith {
         ModBlocks.BLOCKS.register(modEventBus);
         ModBlocks.BLOCK_ITEMS.register(modEventBus);
         ModItems.ITEMS.register(modEventBus);
+        // Register Block Entities
+        ModBlockEntities.register(modEventBus);
         // Register the Deferred Register to the mod event bus so tabs get registered
         CREATIVE_MODE_TABS.register(modEventBus);
 

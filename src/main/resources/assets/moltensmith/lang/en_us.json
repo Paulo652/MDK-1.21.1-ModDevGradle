@@ -45,5 +45,7 @@
   "block.moltensmith.casting_table": "Casting Table",
   "block.moltensmith.casting_basin": "Casting Basin",
   "block.moltensmith.tool_station": "Tool Station",
-  "block.moltensmith.tool_forge": "Tool Forge"
+  "block.moltensmith.tool_forge": "Tool Forge",
+  "block.moltensmith.ember_hearth_firebox": "Ember Hearth Firebox",
+  "block.moltensmith.ember_hearth_bed": "Ember Hearth Bed"
 }

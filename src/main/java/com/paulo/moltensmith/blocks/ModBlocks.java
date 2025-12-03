@@ -113,6 +113,29 @@ public class ModBlocks {
                             .sound(SoundType.ANVIL)
                             .noOcclusion()));
     
+    // ========== HEATING BLOCKS ==========
+    
+    /**
+     * Ember Hearth Firebox - Lower part of the forge for heating metal
+     */
+    public static final DeferredHolder<Block, com.paulo.moltensmith.blocks.heating.EmberHearthFireboxBlock> EMBER_HEARTH_FIREBOX = 
+            registerBlockWithItem("ember_hearth_firebox",
+                    () -> new com.paulo.moltensmith.blocks.heating.EmberHearthFireboxBlock(BlockBehaviour.Properties.of()
+                            .strength(3.5f, 6.0f)
+                            .requiresCorrectToolForDrops()
+                            .sound(SoundType.METAL)
+                            .lightLevel(state -> state.getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.LIT) ? 15 : 0)));
+    
+    /**
+     * Ember Hearth Bed - Upper part where items are heated
+     */
+    public static final DeferredHolder<Block, com.paulo.moltensmith.blocks.heating.EmberHearthBedBlock> EMBER_HEARTH_BED = 
+            registerBlockWithItem("ember_hearth_bed",
+                    () -> new com.paulo.moltensmith.blocks.heating.EmberHearthBedBlock(BlockBehaviour.Properties.of()
+                            .strength(3.5f, 6.0f)
+                            .requiresCorrectToolForDrops()
+                            .sound(SoundType.METAL)));
+    
     // ========== HELPER METHODS ==========
     
     /**
